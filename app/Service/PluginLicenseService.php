@@ -15,9 +15,15 @@ class PluginLicenseService
     {
         $this->apiUrl = env('LICENSE_API_URL', 'http://localhost:5000');
         $this->apiSecret = env('LICENSE_API_SECRET', '');
+        
+        // ========== 启用 SSL 验证 ==========
         $this->client = new Client([
             'timeout' => 10,
-            'verify' => false, // 忽略 SSL 验证（生产环境建议开启）
+            'verify' => true,  // 启用 SSL 验证，防止中间人攻击
+            'headers' => [
+                'User-Agent' => 'DujiaokaLicenseClient/1.0',
+                'X-Client-Version' => '1.0.0',
+            ],
         ]);
     }
 

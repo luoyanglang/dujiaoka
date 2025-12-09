@@ -16,10 +16,38 @@ Route::group(['middleware' => ['dujiaoka.pay_gate_way']], function () {
     $installedPlugins = \App\Models\InstalledPlugin::where('status', 'active')->get();
     
     foreach ($installedPlugins as $plugin) {
-        $routeFile = public_path("plugins/{$plugin->plugin_slug}/routes.php");
+        $pluginPath = public_path("plugins/{$plugin->plugin_slug}");
+        $routeFile = $pluginPath . '/routes.php';
         
         if (file_exists($routeFile)) {
-            require $routeFile;
+            // ========== 安全验证：插件完整性检查 ==========
+            try {
+                // 检查 plugin.json 是否存在
+                $pluginJsonFile = $pluginPath . '/plugin.json';
+                if (!file_exists($pluginJsonFile)) {
+                    \Log::warning("插件缺少 plugin.json: {$plugin->plugin_slug}");
+                    continue;
+                }
+                
+                // 验证 plugin.json 格式
+                $pluginJson = json_decode(file_get_contents($pluginJsonFile), true);
+                if (!$pluginJson || !isset($pluginJson['slug'])) {
+                    \Log::warning("插件 plugin.json 格式错误: {$plugin->plugin_slug}");
+                    continue;
+                }
+                
+                // 验证 slug 一致性
+                if ($pluginJson['slug'] !== $plugin->plugin_slug) {
+                    \Log::warning("插件标识不匹配: {$plugin->plugin_slug}");
+                    continue;
+                }
+                
+                // 加载路由
+                require $routeFile;
+                
+            } catch (\Exception $e) {
+                \Log::error("加载插件路由失败: {$plugin->plugin_slug}, 错误: " . $e->getMessage());
+            }
         }
     }
     

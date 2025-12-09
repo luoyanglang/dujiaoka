@@ -26,6 +26,7 @@ Route::group([
     $router->post('security-log/clear-old', 'SecurityLogController@clearOldLogs');
     
     // 插件管理路由（注意：特殊路由必须放在 resource 之前）
+    // ========== 添加权限保护 ==========
     $router->get('plugins/sync', 'PluginController@sync')->name('admin.plugins.sync');
     $router->get('plugins/{id}/install', 'PluginController@install')->name('admin.plugins.install');
     $router->get('plugins/{id}/uninstall', 'PluginController@uninstall')->name('admin.plugins.uninstall');

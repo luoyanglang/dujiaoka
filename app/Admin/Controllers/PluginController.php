@@ -422,6 +422,23 @@ class PluginController extends AdminController
      */
     public function doActivate(Request $request)
     {
+        // ========== 速率限制：防止暴力破解 ==========
+        $cacheKey = 'plugin_activate_attempts_' . $request->ip();
+        $attempts = cache()->get($cacheKey, 0);
+        
+        if ($attempts >= 5) {
+            \Log::warning("插件激活尝试过多", [
+                'ip' => $request->ip(),
+                'attempts' => $attempts,
+                'timestamp' => now()->toDateTimeString(),
+            ]);
+            
+            return response()->json([
+                'status' => false,
+                'message' => '尝试次数过多，请 10 分钟后再试'
+            ], 429);
+        }
+        
         $request->validate([
             'plugin_id' => 'required|exists:plugins,id',
             'license_key' => 'required|string',
@@ -455,12 +472,26 @@ class PluginController extends AdminController
         );
         
         if (!($activateResult['success'] ?? false)) {
+            // ========== 记录失败尝试 ==========
+            cache()->put($cacheKey, $attempts + 1, now()->addMinutes(10));
+            
+            \Log::warning("插件激活失败", [
+                'plugin_id' => $request->plugin_id,
+                'license_key' => substr($request->license_key, 0, 15) . '...',
+                'ip' => $request->ip(),
+                'error' => $activateResult['message'] ?? '授权验证失败',
+                'timestamp' => now()->toDateTimeString(),
+            ]);
+            
             // 直接返回授权系统的错误信息，不添加前缀
             return response()->json([
                 'status' => false,
                 'message' => $activateResult['message'] ?? '授权验证失败'
             ], 400);
         }
+        
+        // ========== 激活成功，清除失败计数 ==========
+        cache()->forget($cacheKey);
         
         // 验证授权码是否包含该插件的权限
         $licenseData = $activateResult['data'] ?? [];
@@ -490,6 +521,18 @@ class PluginController extends AdminController
         );
 
         if ($installResult['success']) {
+            // ========== 记录安全日志 ==========
+            \Log::info("插件激活成功", [
+                'plugin_id' => $plugin->id,
+                'plugin_name' => $plugin->name,
+                'plugin_slug' => $plugin->slug,
+                'license_key' => substr($request->license_key, 0, 15) . '...',
+                'domain' => $domain,
+                'user_ip' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'timestamp' => now()->toDateTimeString(),
+            ]);
+            
             return response()->json([
                 'status' => true,
                 'message' => '激活并安装成功'
