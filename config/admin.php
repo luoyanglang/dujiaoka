@@ -22,7 +22,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<img src="/vendor/dujiaoka-admin/images/logo.jpg" width="35"> &nbsp;独角 数卡',
+    'logo' => '<img src="/vendor/dujiaoka-admin/images/logo.jpg" width="35"> &nbsp;独角卡数纯净安全版',
 
     /*
     |--------------------------------------------------------------------------

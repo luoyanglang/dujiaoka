@@ -8,7 +8,14 @@
  */
 
 return [
-    'dujiaoka_version' => '2.0.6',
+    // 系统名称
+    'system_name' => '独角卡数纯净安全版',
+    'system_name_short' => '独角卡数',
+    
+    // 系统版本
+    'dujiaoka_version' => '1.0.0',
+    'version_name' => 'v1.0 纯净安全版',
+    
     // 模板集合
     'templates' => [
         'unicorn' => '官方[unicorn-独角兽]',
