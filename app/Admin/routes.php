@@ -15,9 +15,9 @@ Route::group([
     $router->resource('goods', 'GoodsController');
     $router->resource('goods-group', 'GoodsGroupController');
     $router->resource('carmis', 'CarmisController');
-    $router->resource('coupon', 'CouponController');
+    // $router->resource('coupon', 'CouponController'); // 已移除，改为通过会员系统插件提供
     $router->resource('emailtpl', 'EmailtplController');
-    $router->resource('pay', 'PayController');
+    // $router->resource('pay', 'PayController'); // 已移除，改为通过支付插件提供
     $router->resource('order', 'OrderController');
     $router->get('import-carmis', 'CarmisController@importCarmis');
     $router->get('system-setting', 'SystemSettingController@systemSetting');
