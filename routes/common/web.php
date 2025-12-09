@@ -41,3 +41,14 @@ Route::group(['middleware' => ['install.check'],'namespace' => 'Home'], function
     Route::post('do-install', 'HomeController@doInstall');
 });
 
+// 插件市场API接口（只保留API，删除前台页面）
+Route::group(['middleware' => ['dujiaoka.boot']], function () {
+    // API接口
+    Route::post('api/plugin/create-order', '\App\Http\Controllers\PluginMarketController@createOrder');
+    Route::get('api/plugin/check-order/{orderNo}', '\App\Http\Controllers\PluginMarketController@checkOrder');
+    Route::post('api/plugin/activate', '\App\Http\Controllers\PluginMarketController@doActivate');
+    Route::post('api/plugin/install/{slug}', '\App\Http\Controllers\PluginMarketController@install');
+    Route::post('api/plugin/uninstall/{slug}', '\App\Http\Controllers\PluginMarketController@uninstall');
+    Route::post('api/plugin/toggle/{slug}', '\App\Http\Controllers\PluginMarketController@toggle');
+});
+

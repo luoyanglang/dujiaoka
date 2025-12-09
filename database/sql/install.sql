@@ -45,7 +45,9 @@ INSERT INTO `admin_menu` VALUES (22, 0, 8, 'Order_Manage', 'fa-table', NULL, '',
 INSERT INTO `admin_menu` VALUES (23, 22, 20, 'Order', 'fa-heart', '/order', '', 1, '2021-05-23 20:46:13', '2021-05-23 20:47:16');
 INSERT INTO `admin_menu` VALUES (24, 19, 21, 'System_Setting', 'fa-cogs', '/system-setting', '', 1, '2021-05-26 10:26:34', '2021-05-26 10:26:34');
 INSERT INTO `admin_menu` VALUES (25, 19, 22, 'Email_Test', 'fa-envelope', '/email-test', '', 1, '2022-07-26 12:09:34', '2022-07-26 12:17:21');
-INSERT INTO `admin_menu` VALUES (26, 19, 23, 'Security_Log', 'fa-shield', '/security-log', '', 1, '2024-12-07 00:00:00', '2024-12-07 00:00:00');
+INSERT INTO `admin_menu` VALUES (26, 19, 23, '安全日志', 'fa-shield', '/security-log', '', 1, '2024-12-07 00:00:00', '2024-12-07 00:00:00');
+INSERT INTO `admin_menu` VALUES (27, 0, 24, '插件市场', 'fa-puzzle-piece', NULL, '', 1, '2025-12-07 00:00:00', '2025-12-07 00:00:00');
+INSERT INTO `admin_menu` VALUES (28, 27, 25, '插件列表', 'fa-list', '/plugins', '', 1, '2025-12-07 00:00:00', '2025-12-07 00:00:00');
 
 COMMIT;
 

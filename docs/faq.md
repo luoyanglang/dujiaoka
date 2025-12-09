@@ -1,6 +1,53 @@
 # 常见问题 FAQ
 
-> 收集整理用户高频问题及解决方案
+> 收集整理用户高频问题及解决方案，共29个问题
+
+## 📑 问题导航
+
+### 安装部署
+- [Q1: 安装页面显示 404？](#q1-安装页面显示-404)
+- [Q2: Composer install 很慢或失败？](#q2-composer-install-很慢或失败)
+- [Q3: 权限错误 Permission denied？](#q3-权限错误-permission-denied)
+- [Q4: 数据库连接失败？](#q4-数据库连接失败)
+
+### 功能使用
+- [Q5: 队列任务不执行？](#q5-队列任务不执行)
+- [Q6: 邮件发送失败？](#q6-邮件发送失败)
+- [Q7: 支付回调失败？](#q7-支付回调失败)
+- [Q8: 卡密不自动发货？](#q8-卡密不自动发货)
+
+### 安全相关
+- [Q9: 如何修改后台路径？](#q9-如何修改后台路径)
+- [Q10: 如何限制后台访问 IP？](#q10-如何限制后台访问-ip)
+- [Q11: 如何防止订单号被枚举？](#q11-如何防止订单号被枚举)
+- [Q12: 如何查看安全日志？](#q12-如何查看安全日志)
+
+### 性能优化
+- [Q13: 网站访问很慢？](#q13-网站访问很慢)
+- [Q14: 数据库查询慢？](#q14-数据库查询慢)
+
+### 升级更新
+- [Q15: 如何升级到最新版本？](#q15-如何升级到最新版本)
+- [Q16: 升级后出现错误？](#q16-升级后出现错误)
+
+### 其他问题
+- [Q17: 如何更换域名？](#q17-如何更换域名)
+- [Q18: 如何备份数据？](#q18-如何备份数据)
+- [Q19: 如何迁移到新服务器？](#q19-如何迁移到新服务器)
+
+### 官方常见问题
+- [Q20: PHP 终端环境对应不上？](#q20-php-终端环境对应不上)
+- [Q21: 后台登录出现 0 err？](#q21-后台登录出现-0-err)
+- [Q22: 后台操作提交出现 500 错误？](#q22-后台操作提交出现-500-错误)
+- [Q23: 上传图片不显示或显示错误？](#q23-上传图片不显示或显示错误)
+- [Q24: 邮件配置修改后不生效？](#q24-邮件配置修改后不生效)
+- [Q25: 易支付配置问题？](#q25-易支付配置问题)
+- [Q26: 强制 HTTPS 后报错？](#q26-强制-https-后报错)
+- [Q27: 如何更换前端模板？](#q27-如何更换前端模板)
+- [Q28: 各支付接口配置对照表](#q28-各支付接口配置对照表)
+- [Q29: 如何联系技术支持？](#q29-如何联系技术支持)
+
+---
 
 ## 安装部署
 
@@ -421,7 +468,212 @@ tar -xzf /tmp/storage.tar.gz -C /www/wwwroot/dujiaoka/
 5. 修改 `.env` 配置
 6. 清理缓存
 
-### Q20: 如何联系技术支持？
+### Q20: PHP 终端环境对应不上？
+
+**问题**：执行 `php artisan` 命令时版本不对
+
+**解决方案**（宝塔面板）：
+
+```bash
+# 将宝塔 PHP 版本设置为系统 php-cli 版本
+ln -sf /www/server/php/74/bin/php /usr/bin/php
+```
+
+⚠️ 根据自己宝塔安装的 PHP 版本修改：
+- PHP 7.2: `/www/server/php/72/bin/php`
+- PHP 7.4: `/www/server/php/74/bin/php`
+- PHP 8.0: `/www/server/php/80/bin/php`
+
+验证：
+```bash
+php -v
+```
+
+### Q21: 后台登录出现 0 err？
+
+**原因**：开启了 HTTPS 但后台配置未同步
+
+**解决方案**：
+
+编辑 `.env` 文件，添加或修改：
+```env
+ADMIN_HTTPS=true
+```
+
+清理缓存：
+```bash
+php artisan config:clear
+php artisan cache:clear
+```
+
+**原则**：只要开启了 HTTPS 访问，后台也要开启 HTTPS！
+
+### Q22: 后台操作提交出现 500 错误？
+
+**原因**：被宝塔防火墙或 CDN 防火墙拦截
+
+**解决方案**：
+
+1. 检查宝塔防火墙日志：
+   - 安全 → 日志
+   - 查找拦截记录
+
+2. 放行后台路径：
+   - 安全 → 网站防火墙
+   - 添加白名单规则
+   - 放行 `/admin/*` 或你的自定义后台路径
+
+3. 检查 CDN 防火墙（如使用）
+
+### Q23: 上传图片不显示或显示错误？
+
+**解决方案**：
+
+编辑 `.env` 文件：
+```env
+APP_URL=https://你的域名.com
+```
+
+确保：
+- 域名正确（包含 http:// 或 https://）
+- 没有多余的斜杠
+- 与实际访问地址一致
+
+清理缓存：
+```bash
+php artisan config:clear
+```
+
+### Q24: 邮件配置修改后不生效？
+
+**原因**：队列进程未重启
+
+**解决方案**：
+
+**宝塔面板 + Supervisor**：
+```bash
+supervisorctl restart dujiaoka-queue:*
+```
+
+**宝塔应用管理器**：
+- 软件商店 → Supervisor
+- 找到队列进程
+- 点击重启
+
+**手动重启**：
+```bash
+# 停止旧进程
+ps aux | grep queue:work
+kill -9 进程ID
+
+# 启动新进程
+cd /www/wwwroot/dujiaoka
+php artisan queue:work --daemon
+```
+
+### Q25: 易支付配置问题？
+
+**配置方法**（v1.8.2+）：
+
+后台 → 支付配置 → 易支付：
+```
+商户ID: 你的易支付商户号
+商户Key: 易支付请求网址（完整URL）
+商户密钥: 你的易支付密钥
+```
+
+**商户Key 填写示例**：
+```
+http://你的易支付域名.com/submit.php
+```
+
+⚠️ 注意：
+- 必须加 `/submit.php`
+- 完整的 URL 地址
+- 参考你的易支付文档
+
+**旧版本（v1.8.2之前）**：
+
+需要修改代码文件 `app/Http/Controllers/Pay/YipayController.php`：
+
+```php
+// 第11行
+const PAY_URI = 'http://你的易支付域名.com/submit.php';
+```
+
+### Q26: 强制 HTTPS 后报错？
+
+**错误信息**：
+```
+The GET method is not supported for this route. Supported methods: POST
+```
+
+**解决方案**：
+
+编辑 `.env` 文件：
+```env
+ADMIN_HTTPS=true
+```
+
+如果使用 Nginx 强制 HTTPS，配置示例：
+```nginx
+server {
+    listen 80;
+    server_name yourdomain.com;
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name yourdomain.com;
+    
+    ssl_certificate /path/to/cert.pem;
+    ssl_certificate_key /path/to/key.pem;
+    
+    # ... 其他配置
+}
+```
+
+### Q27: 如何更换前端模板？
+
+**可用模板**：
+- `unicorn` - 官方默认模板
+- `luna` - 简洁风格（@Julyssn 贡献）
+- `hyper` - 现代风格（@bimoe 贡献）
+
+**更换方法**：
+
+后台 → 配置 → 系统设置 → 基础设置：
+```
+前端模板: 选择模板名称
+```
+
+保存后清理缓存：
+```bash
+php artisan view:clear
+php artisan cache:clear
+```
+
+### Q28: 各支付接口配置对照表
+
+| 支付方式 | 商户ID | 商户Key | 商户密钥 | 备注 |
+|---------|--------|---------|---------|------|
+| **支付宝官方** | 应用APPID | 支付宝公钥 | 商户私钥 | 当面付/PC/WAP |
+| **微信官方** | 公众号/小程序APPID | 商户号 | 商户API密钥 | - |
+| **PayJS** | 商户号(mchid) | 空 | PayJS密钥 | - |
+| **码支付** | 商户号 | 支付请求网址 | 密钥 | 将接口网址填入商户Key |
+| **Paysapi** | 商户号 | 空 | 密钥 | - |
+| **易支付** | 商户号 | 请求网址 | 密钥 | 网址后加/submit.php |
+| **V免签** | 通讯密钥 | 空 | V免签地址 | - |
+| **PayPal** | 商家邮箱 | Client ID | Secret | - |
+| **Epusdt** | API认证token | 空 | 收银台地址 | 地址+/api/v1/order/create-transaction |
+
+**Epusdt 特别说明**：
+- 如果独角数卡和 Epusdt 在同一服务器
+- 使用 `127.0.0.1` 而不是域名
+- 示例：`http://127.0.0.1:8000/api/v1/order/create-transaction`
+
+### Q29: 如何联系技术支持？
 
 **本项目支持**：
 - Telegram: https://t.me/luoyanglang
@@ -432,7 +684,6 @@ tar -xzf /tmp/storage.tar.gz -C /www/wwwroot/dujiaoka/
 - 原项目 GitHub: https://github.com/assimon/dujiaoka
 
 **注意**：
-- ❌ 不提供收费技术支持
 - ❌ 警惕冒充诈骗
 - ✅ 本项目维护者 Telegram: @luoyanglang
 

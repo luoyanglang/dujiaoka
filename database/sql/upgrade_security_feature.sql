@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `security_logs` (
 
 -- 添加后台菜单
 INSERT INTO `admin_menu` (`parent_id`, `order`, `title`, `icon`, `uri`, `extension`, `show`, `created_at`, `updated_at`)
-SELECT 19, 23, 'Security_Log', 'fa-shield', '/security-log', '', 1, NOW(), NOW()
+SELECT 19, 23, '安全日志', 'fa-shield', '/security-log', '', 1, NOW(), NOW()
 FROM DUAL
 WHERE NOT EXISTS (
     SELECT 1 FROM `admin_menu` WHERE `uri` = '/security-log'

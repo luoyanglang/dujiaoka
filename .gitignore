@@ -12,7 +12,14 @@ npm-debug.log
 yarn-error.log
 .idea
 .vscode
+.kiro/
 *.log
 *.db
 .DS_Store
 Thumbs.db
+
+# 插件市场相关
+/public/plugins/*
+!/public/plugins/.gitkeep
+/storage/plugins/*
+!/storage/plugins/.gitkeep

@@ -4,40 +4,30 @@
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-blue" alt="license MIT"></a>
 <a href="https://github.com/assimon/dujiaoka/releases/tag/2.0.4"><img src="https://img.shields.io/badge/version-2.0.4-red" alt="version 2.0.4"></a>
 <a href="https://www.php.net/releases/7_4_0.php"><img src="https://img.shields.io/badge/PHP-7.4-lightgrey" alt="php74"></a>
-<a href="https://shang.qq.com/wpa/qunwpa?idkey=37b6b06f7c941dae20dcd5784088905d6461064d7f33478692f0c4215546cee0"><img src="https://img.shields.io/badge/QQ%E7%BE%A4-568679748-green" alt="QQ群：568679748"></a>
 </p>
 
-## 独角数卡
+# **独角数卡 安全增强版**
 
+<sub>基于原版深度优化，新增安全功能 + 完整中文文档 + 新手友好教程 + 支持原版安装无缝升级</sub>
+
+
+### ✨ 本版本特色
+
+#### 🔒 安全增强（v2.0.5）
+<sub>安全日志系统 · 动态限流配置 · XSS防护增强 · 输入验证强化 · 支付网关增强</sub>
+
+#### 📚 文档完善
+<sub>13篇详细教程 · 4种部署方案 · 29个常见问题 · 新手友好</sub>
+
+#### 🎯 快速开始
+<sub>[快速安装](docs/quick-start.md) · [安全升级](docs/upgrade-security.md) · [文档中心](docs/README.md)</sub>
+
+---
 开源式站长自动化售货解决方案、高效、稳定、快速！
 
 - 框架来自：[laravel/framework](https://github.com/laravel/laravel).
 - 后台管理系统：[laravel-admin](https://laravel-admin.org/).
 - 前端ui [bootstrap](https://getbootstrap.com/).
-
-## 🔒 安全增强版 v2.0.5
-
-本版本新增多项安全功能，显著提升系统安全性：
-
-### 新增功能
-- ✅ **安全日志系统** - 记录所有支付请求和可疑行为，后台可查看、筛选、导出
-- ✅ **动态限流配置** - 后台可配置订单查询频率，实时生效无需重启
-- ✅ **XSS 防护增强** - 邮件模板和订单信息自动转义，防止跨站脚本攻击
-- ✅ **输入验证强化** - 订单号格式验证、邮箱格式验证
-- ✅ **支付网关增强** - 请求日志记录、订单号格式检查
-
-### 升级说明
-- **新安装用户**：直接安装即可，所有功能已包含
-- **已安装用户**：查看 [安全升级指南](docs/upgrade-security.md) 了解升级步骤
-
-### 配置路径
-- **安全设置**：后台 → 配置 → 系统设置 → 安全设置
-- **安全日志**：后台 → 配置 → Security_Log
-
-### 完整文档
-查看 [docs/README.md](docs/README.md) 获取完整文档
-
----
 
 核心贡献者：
 - [iLay1678](https://github.com/iLay1678)
@@ -59,7 +49,8 @@
 
 ## 写在前面
 本程序有一定的上手难度（对于小白而言），需要您对linux服务器有基本的认识和操作度   
-且本程序不支持虚拟主机，大概率也不支持windows服务器！  
+且本程序不支持虚拟主机
+[windows服务器部署](docs/install-windows.md)（不推荐）！  
 如果您连宝塔、phpstudy、AppNode等一键可视化服务器面板也未曾使用或听说过，那么我大概率劝您放弃本程序！  
 如果您觉得部署有难度，建议仔细阅读（仔细！）宝塔视频安装篇教程，里面有保姆级的安装流程和视频教程！   
 认真观看部署教程我可以保证您98%可能性能部署成功！  
@@ -68,6 +59,12 @@
 ## 使用交流      
 Telegram: [https://t.me/luoyanglang](https://t.me/luoyanglang)    
 GitHub: [https://github.com/luoyanglang/dujiaoka](https://github.com/luoyanglang/dujiaoka)
+
+## 🔥推荐服务商
+
+🔥全球稳定过墙及开25端口物理机[👉🏻点我直达找台妹](https://t.me/XMOhost8888)
+🔥🔥全球优质CDN服务商[👉🏻点我直达找台妹](https://t.me/XMOhost8888)
+🔥🔥🔥高效又稳定，算力更狠劲——服务器特价入手不心疼！[👉点我直达购买](https://t.me/zihaofuwuqi)
 
 ## 原作者信息
 
@@ -108,9 +105,7 @@ GitHub: [https://github.com/luoyanglang/dujiaoka](https://github.com/luoyanglang
 ### 更多文档
 查看 [完整文档目录](docs/README.md) 获取 40+ 篇详细文档
 
-### 原作者资源
-- [原作者视频教程](https://pan.dujiaoka.com)
-- [原项目 Wiki](https://github.com/assimon/dujiaoka/wiki)
+
 
 ## 支付接口已集成
 - [x] 支付宝当面付
