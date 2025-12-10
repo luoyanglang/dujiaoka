@@ -10,6 +10,8 @@ use Dcat\Admin\Http\Controllers\AdminController;
 
 class SecurityLogController extends AdminController
 {
+    protected $title = '安全日志';
+    
     /**
      * Make a grid builder.
      *
@@ -43,13 +45,8 @@ class SecurityLogController extends AdminController
             $grid->disableCreateButton();
             $grid->disableActions();
             
-            // 批量删除
-            $grid->batchActions(function (Grid\Tools\BatchActions $batch) {
-                $batch->add('批量删除', function ($ids) {
-                    \App\Models\SecurityLog::destroy($ids);
-                    return $this->response()->success('删除成功')->refresh();
-                });
-            });
+            // 启用批量删除
+            $grid->enableBatchDelete();
             
             $grid->export();
         });

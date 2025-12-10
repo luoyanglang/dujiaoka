@@ -294,17 +294,12 @@ redis-cli --version
 nginx -v
 ```
 
-## 推荐服务商
+## 🔥推荐服务商
 
-### 国内服务器
-- 阿里云 ECS
-- 腾讯云 CVM
-- 华为云 ECS
 
-### 国外服务器
-- Vultr（支持支付宝）
-- DigitalOcean
-- Linode
+
+
+
 
 ### 面板推荐
 - 宝塔面板（最简单）⭐

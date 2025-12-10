@@ -318,8 +318,7 @@ QUEUE_CONNECTION=redis
 ## 下一步
 
 - 查看 [基础配置](config-basic.md) 详细配置系统
-- 查看 [支付配置](config-payment.md) 配置支付接口
-- 查看 [商品管理](usage-goods.md) 学习商品管理
+- 查看 [常见问题](faq.md) 解决常见问题
 
 ---
 

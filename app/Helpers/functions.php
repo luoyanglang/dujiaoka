@@ -236,3 +236,29 @@ if (!function_exists('assoc_unique')) {
         return $arr;
     }
 }
+
+if (!function_exists('feature_enabled')) {
+    /**
+     * 检查功能是否启用
+     *
+     * @param string $feature 功能名称
+     * @return bool
+     */
+    function feature_enabled(string $feature): bool
+    {
+        return config("features.{$feature}", false);
+    }
+}
+
+if (!function_exists('feature_disabled')) {
+    /**
+     * 检查功能是否禁用
+     *
+     * @param string $feature 功能名称
+     * @return bool
+     */
+    function feature_disabled(string $feature): bool
+    {
+        return !feature_enabled($feature);
+    }
+}
